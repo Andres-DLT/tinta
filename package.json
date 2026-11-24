@@ -1,0 +1,55 @@
+{
+  "name": "tinta",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -k -n web,collab -c blue,magenta \"next dev\" \"tsx watch server/index.ts\"",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "dev:web": "next dev",
+    "dev:collab": "tsx watch server/index.ts",
+    "start:collab": "tsx server/index.ts",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "tsx --test tests/*.test.ts"
+  },
+  "dependencies": {
+    "@supabase/ssr": "^0.12.7",
+    "@supabase/supabase-js": "^2.119.2",
+    "@tiptap/core": "^3.35.0",
+    "@tiptap/extension-collaboration": "^3.35.0",
+    "@tiptap/extension-collaboration-caret": "^3.35.0",
+    "@tiptap/extension-list": "^3.35.0",
+    "@tiptap/extensions": "^3.35.0",
+    "@tiptap/pm": "^3.35.0",
+    "@tiptap/react": "^3.35.0",
+    "@tiptap/starter-kit": "^3.35.0",
+    "@tiptap/y-tiptap": "^3.3.1",
+    "lib0": "^0.2.120",
+    "lucide-react": "^1.77.0",
+    "next": "16.4.6",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "^0.0.1",
+    "tsx": "^4.23.15",
+    "ws": "^8.23.0",
+    "y-protocols": "^1.0.7",
+    "y-websocket": "^3.1.0",
+    "yjs": "^13.6.33"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "4.3.3",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/ws": "^8.18.2",
+    "concurrently": "^10.0.7",
+    "eslint": "^9",
+    "eslint-config-next": "16.4.6",
+    "tailwindcss": "4.3.3",
+    "typescript": "^5"
+  },
+  "engines": {
+    "node": "22.x"
+  }
+}

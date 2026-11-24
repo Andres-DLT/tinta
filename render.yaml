@@ -1,0 +1,22 @@
+# Blueprint de Render para el servidor de colaboración (WebSocket).
+# La web (Next.js) se despliega en Vercel; la base de datos es Supabase.
+services:
+  - type: web
+    name: tinta-collab
+    runtime: node
+    plan: free
+    region: virginia
+    buildCommand: npm ci
+    startCommand: npm run start:collab
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_VERSION
+        value: "22"
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SECRET_KEY
+        sync: false
+      # URL pública de la web, p. ej. https://tinta.vercel.app
+      - key: COLLAB_ALLOWED_ORIGINS
+        sync: false
