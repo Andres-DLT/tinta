@@ -4,6 +4,16 @@ Un Google Docs ligero: varias personas editan el mismo documento a la vez, ven l
 
 **Stack:** Next.js 16 (App Router, Cache Components) · WebSockets (`ws` + protocolo Yjs) · Supabase (Auth, Postgres con RLS y Realtime) · TipTap 3 · Tailwind CSS 4.
 
+**Demo:** <https://tinta-docs.vercel.app>. Crea una cuenta, abre un documento y compártelo con otra cuenta (o ábrelo en una ventana de incógnito) para verlo en tiempo real.
+
+> La demo usa planes gratuitos. Si nadie la ha usado en los últimos 15 minutos, el servidor de tiempo real tarda alrededor de un minuto en despertar y verás «Conectando…».
+
+![Editor con varias personas](docs/screenshots/editor.png)
+
+| Vista de un lector (solo lectura, con el cursor de otra persona) | Compartir |
+|---|---|
+| ![Lector](docs/screenshots/lector.png) | ![Compartir](docs/screenshots/compartir.png) |
+
 ## Funcionalidades
 
 - **Edición simultánea sin conflictos.** El documento es un CRDT ([Yjs](https://yjs.dev)): las ediciones concurrentes, incluso en la misma línea, convergen al mismo resultado en todos los clientes.
@@ -103,6 +113,18 @@ Para verlo en acción, crea dos cuentas, abre un documento con la primera, invit
 Los tests (`tests/collab-server.test.ts`) conectan clientes Yjs reales al servidor y comprueban: sincronización, convergencia de ediciones concurrentes, que los lectores no pueden escribir, que la presencia no se puede suplantar, los códigos de cierre 4401/4403/4404, la revalidación de permisos (4409/4403), la persistencia y recarga, y el cierre al borrar un documento.
 
 ## Despliegue
+
+La demo funciona íntegramente en planes gratuitos:
+
+| Pieza | Servicio | Notas |
+|---|---|---|
+| Web (Next.js) | Vercel Hobby | se despliega sola en cada push a `main` |
+| Servidor WebSocket | Render Free (`render.yaml`) | se duerme tras 15 min sin uso; la web lo despierta al cargar |
+| Base de datos y auth | Supabase Free | se pausa tras 7 días sin actividad; se reactiva desde el dashboard |
+
+En la demo la confirmación por email está desactivada. El email incluido en el plan gratuito de Supabase solo llega a los miembros del equipo del proyecto. Para exigir confirmación, configura un SMTP propio (p. ej. Resend) y vuelve a activar *Confirm email*.
+
+Para desplegar tu propia copia:
 
 - **Web (Next.js):** Vercel o cualquier hosting de Next. Configura las variables `NEXT_PUBLIC_*`, con `NEXT_PUBLIC_COLLAB_URL=wss://collab.tudominio.com`, y añade `https://tudominio.com/auth/callback` a las *Redirect URLs* de Supabase.
 - **Servidor de colaboración:** necesita un proceso Node de larga duración con WebSockets (Railway, Render, Fly.io, un VPS…). Las funciones serverless de Vercel no sirven para esto.
