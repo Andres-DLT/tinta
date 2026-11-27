@@ -50,7 +50,11 @@ async function DocumentList() {
 
   const { data, error } = await supabase
     .from("document_members")
-    .select("role, documents(id, title, content_preview, updated_at, owner:profiles(display_name, color))")
+    // `!documents_owner_id_fkey`: documents↔profiles también se relacionan a
+    // través de document_members, así que hay que indicar la FK del propietario.
+    .select(
+      "role, documents(id, title, content_preview, updated_at, owner:profiles!documents_owner_id_fkey(display_name, color))",
+    )
     .eq("user_id", user.id);
 
   if (error) {
