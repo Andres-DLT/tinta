@@ -64,7 +64,7 @@ Requisitos: **Node.js 20.12 o superior** y un proyecto de [Supabase](https://sup
 
 ### 1. Base de datos
 
-En el dashboard de Supabase abre **SQL Editor**, pega el contenido de `supabase/migrations/20261122000000_init.sql` y ejecútalo.
+En el dashboard de Supabase abre **SQL Editor** y ejecuta, en orden, cada archivo de `supabase/migrations/` (pega su contenido y pulsa *Run*).
 
 > Con la CLI: `npx supabase init` (no toca la carpeta `migrations`), `npx supabase link --project-ref <ref>` y `npx supabase db push`.
 
